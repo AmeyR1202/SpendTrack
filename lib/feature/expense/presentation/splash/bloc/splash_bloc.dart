@@ -17,6 +17,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
 
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       final user = await getUserUseCase();
 
