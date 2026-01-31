@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:expense_tracker/feature/expense/data/tables/categories_table.dart';
+import 'package:expense_tracker/feature/expense/data/tables/transactions_table.dart';
 import 'package:expense_tracker/feature/expense/data/tables/user_tables.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Users, Categories])
+@DriftDatabase(tables: [Users, Categories, Transactions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(openConnection());
   @override
@@ -41,6 +42,19 @@ class AppDatabase extends _$AppDatabase {
     await batch((batch) {
       batch.insertAll(categories, data);
     });
+  }
+
+  // Transaction queries
+  Future<void> insertTransactions(TransactionsCompanion data) {
+    return into(transactions).insert(data);
+  }
+
+  Future<List<Transaction>> getTransactionForMonth(DateTime month) {
+    final start = DateTime(month.year, month.month, 1).millisecondsSinceEpoch;
+    final end = DateTime(month.year, month.month + 1, 1).millisecondsSinceEpoch;
+    return (select(
+      transactions,
+    )..where((t) => t.timestamp.isBetweenValues(start, end))).get();
   }
 }
 
