@@ -1,4 +1,4 @@
-import 'package:expense_tracker/feature/expense/data/database/app_database.dart';
+import 'package:expense_tracker/core/database/app_database_instance.dart';
 import 'package:expense_tracker/feature/expense/data/datasources/category_local_data_source.dart';
 import 'package:expense_tracker/feature/expense/data/datasources/transaction_local_data_source.dart';
 import 'package:expense_tracker/feature/expense/data/repositories/category_repository_impl.dart';
@@ -18,16 +18,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/dashboard',
       builder: (context, state) {
-        final database = AppDatabase();
-
         return BlocProvider(
           create: (_) => DashboardBloc(
             getMonthlySummaryUsecase: GetMonthlySummaryUsecase(
               repository: TransactionRepositoryImpl(
-                TransactionLocalDataSource(database),
+                TransactionLocalDataSource(appDatabase),
               ),
               categoryRepository: CategoryRepositoryImpl(
-                CategoryLocalDataSource(database),
+                CategoryLocalDataSource(appDatabase),
               ),
             ),
           ),

@@ -1,5 +1,5 @@
+import 'package:expense_tracker/core/database/app_database_instance.dart';
 import 'package:expense_tracker/core/router/app_router.dart';
-import 'package:expense_tracker/feature/expense/data/database/app_database.dart';
 import 'package:expense_tracker/feature/expense/data/datasources/user_local_data_source.dart';
 import 'package:expense_tracker/feature/expense/data/repositories/user_repository_impl.dart';
 import 'package:expense_tracker/feature/expense/domain/usecases/get_user_usecase.dart';
@@ -18,21 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final database = AppDatabase();
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (_) => SplashBloc(
             getUserUseCase: GetUserUseCase(
-              repository: UserRepositoryImpl(UserLocalDataSource(database)),
+              repository: UserRepositoryImpl(UserLocalDataSource(appDatabase)),
             ),
           ),
         ),
         BlocProvider(
           create: (_) => EnterNameBloc(
             saveUserUseCase: SaveUserUseCase(
-              repository: UserRepositoryImpl(UserLocalDataSource(database)),
+              repository: UserRepositoryImpl(UserLocalDataSource(appDatabase)),
             ),
           ),
         ),

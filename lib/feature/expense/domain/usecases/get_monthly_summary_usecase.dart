@@ -14,6 +14,7 @@ class GetMonthlySummaryUsecase {
 
   Future<MonthlySummaryEntity> call(DateTime month) async {
     final transactions = await repository.getTransactionsForMonth(month);
+
     final categories = await categoryRepository.getCategories();
 
     final categoryTypeMap = {for (final c in categories) c.categoryId: c.type};

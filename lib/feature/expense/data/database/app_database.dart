@@ -14,7 +14,7 @@ part 'app_database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(openConnection());
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 3;
 
   // User queries
   Future<User?> getUser() {
