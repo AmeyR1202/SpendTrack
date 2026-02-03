@@ -5,6 +5,9 @@ import 'package:expense_tracker/feature/expense/presentation/dashboard/bloc/dash
 import 'package:expense_tracker/feature/expense/presentation/dashboard/bloc/dashboard_event.dart';
 import 'package:expense_tracker/feature/expense/presentation/dashboard/bloc/dashboard_state.dart';
 import 'package:expense_tracker/feature/expense/presentation/user/bloc/user_bloc.dart';
+import 'package:expense_tracker/feature/expense/presentation/widgets/balance_card.dart';
+import 'package:expense_tracker/feature/expense/presentation/widgets/transaction_section_header.dart';
+import 'package:expense_tracker/feature/expense/presentation/widgets/transaction_stat_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,53 +37,59 @@ class _DashboardPageState extends State<DashboardPage> {
 
       body: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
-          if (state.status == Status.loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (state.status == Status.error) {
-            return Center(
-              child: Text(state.errorMessage ?? 'Something went wrong'),
-            );
-          }
-
           if (state.status == Status.success && state.summary != null) {
-            return _SummaryView(
-              income: state.summary!.totalIncome,
-              expense: state.summary!.totalExpense,
+            final income = state.summary!.totalIncome;
+            final expense = state.summary!.totalExpense;
+
+            final balance = income - expense;
+
+            final progress = income == 0
+                ? 0.0
+                : (expense / income).clamp(0.0, 1.0);
+
+            return Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BalanceCard(balance: balance, progress: progress),
+
+                  const SizedBox(height: 16),
+
+                  const TransactionsHeader(),
+
+                  const SizedBox(height: 16),
+
+                  Row(
+                    children: const [
+                      TransactionStatCard(
+                        label: 'Income',
+
+                        percentage: 24, // dummy for now
+                        color: Colors.green,
+                        icon: Icons.trending_up,
+                      ),
+                      SizedBox(width: 12),
+                      TransactionStatCard(
+                        label: 'Expense',
+                        percentage: -42, // dummy for now
+                        color: Colors.orange,
+                        icon: Icons.trending_down,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  Text('Transaction List will come here'),
+
+                  const SizedBox(height: 32),
+                ],
+              ),
             );
           }
 
           return const SizedBox.shrink();
         },
-      ),
-    );
-  }
-}
-
-class _SummaryView extends StatelessWidget {
-  final double income;
-  final double expense;
-
-  const _SummaryView({required this.income, required this.expense});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Income: ₹$income',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Expense: ₹$expense',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ],
       ),
     );
   }
