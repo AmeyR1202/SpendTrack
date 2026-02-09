@@ -1,85 +1,51 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add_transaction_step.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddTransactionBloc
     extends Bloc<AddTransactionEvent, AddTransactionState> {
   AddTransactionBloc() : super(AddTransactionState.initial()) {
-    // my event-handlers
-    on<FlowStarted>(_onFlowStarted);
-    on<TransactionTypeSelected>(_onTransactionTypeSelected);
-    on<AmountDigitPressed>(_onAmountDigitPressed);
-    on<AmountConfirmation>(_onAmountConfirmation);
-    on<CategorySelected>(_onCategorySelected);
-    on<NotesEntered>(_onNotesEntered);
-    on<TransactionSubmitted>(_onTransactionSubmitted);
-  }
+    on<FlowStarted>((event, emit) {
+      emit(AddTransactionState.initial());
+    });
 
-  // Flow Lifecyle start
-  void _onFlowStarted(FlowStarted event, Emitter<AddTransactionState> emit) {
-    emit(AddTransactionState.initial());
-  }
+    on<TransactionTypeSelected>((event, emit) {
+      emit(
+        state.copyWith(type: event.type, step: AddTransactionStep.enterAmount),
+      );
+    });
 
-  // TRANSACTION TYPE STEP
+    on<AmountDigitPressed>((event, emit) {
+      final updated = state.amount * 10 + event.digit;
+      emit(state.copyWith(amount: updated));
+    });
 
-  void _onTransactionTypeSelected(
-    TransactionTypeSelected event,
-    Emitter<AddTransactionState> emit,
-  ) {
-    emit(
-      state.copyWith(type: event.type, step: AddTransactionStep.enterAmount),
-    );
-  }
+    on<AmountBackspacePressed>((event, emit) {
+      final updated = state.amount ~/ 10;
+      emit(state.copyWith(amount: updated));
+    });
 
-  // AMOUNT ENTRY
+    on<AmountConfirmation>((event, emit) {
+      if (state.amount == 0) return;
+      emit(state.copyWith(step: AddTransactionStep.selectCategory));
+    });
 
-  void _onAmountDigitPressed(
-    AmountDigitPressed event,
-    Emitter<AddTransactionState> emit,
-  ) {
-    final double newAmount = (state.amount * 10 + event.digit).clamp(
-      0,
-      9999999,
-    );
+    on<CategorySelected>((event, emit) {
+      emit(
+        state.copyWith(
+          category: event.category,
+          step: AddTransactionStep.addDetails,
+        ),
+      );
+    });
 
-    emit(state.copyWith(amount: newAmount));
-  }
+    on<NotesEntered>((event, emit) {
+      emit(state.copyWith(notes: event.notes));
+    });
 
-  void _onAmountConfirmation(
-    AmountConfirmation event,
-    Emitter<AddTransactionState> emit,
-  ) {
-    if (state.amount <= 0) return;
-    emit(state.copyWith(step: AddTransactionStep.selectCategory));
-  }
-
-  // CATEGORY SELECTION
-
-  void _onCategorySelected(
-    CategorySelected event,
-    Emitter<AddTransactionState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        category: event.category,
-        step: AddTransactionStep.addDetails,
-      ),
-    );
-  }
-
-  // NOTES / TransactionPage
-
-  void _onNotesEntered(NotesEntered event, Emitter<AddTransactionState> emit) {
-    emit(state.copyWith(notes: event.notes));
-  }
-
-  // Submit
-
-  void _onTransactionSubmitted(
-    TransactionSubmitted event,
-    Emitter<AddTransactionState> emit,
-  ) {
-    emit(state.copyWith(step: AddTransactionStep.completed));
+    on<TransactionSubmitted>((event, emit) {
+      emit(state.copyWith(step: AddTransactionStep.completed));
+    });
   }
 }

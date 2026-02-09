@@ -6,7 +6,7 @@ import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add
 class AddTransactionState {
   final AddTransactionStep step;
   final TransactionType? type;
-  final double amount;
+  final int amount;
   final CategoryEntity? category;
   final String? notes;
   final Status status;
@@ -14,20 +14,23 @@ class AddTransactionState {
   const AddTransactionState({
     required this.step,
     this.type,
-    this.amount = 0.0,
+    this.amount = 0,
     this.category,
     this.notes,
     this.status = Status.initial,
   });
 
   factory AddTransactionState.initial() {
-    return AddTransactionState(step: AddTransactionStep.chooseType);
+    return const AddTransactionState(
+      step: AddTransactionStep.chooseType,
+      amount: 0,
+    );
   }
 
   AddTransactionState copyWith({
     AddTransactionStep? step,
     TransactionType? type,
-    double? amount,
+    int? amount,
     CategoryEntity? category,
     String? notes,
     Status? status,
@@ -38,6 +41,7 @@ class AddTransactionState {
       amount: amount ?? this.amount,
       notes: notes ?? this.notes,
       status: status ?? this.status,
+      category: category ?? this.category,
     );
   }
 }

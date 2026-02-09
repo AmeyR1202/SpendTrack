@@ -38,3 +38,5 @@ class NotesEntered extends AddTransactionEvent {
 
 /// Final submit
 class TransactionSubmitted extends AddTransactionEvent {}
+
+class AmountBackspacePressed extends AddTransactionEvent {}

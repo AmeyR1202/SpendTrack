@@ -5,6 +5,7 @@ import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add
 import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add_transaction_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/amount_keypad_sheet.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/type_selection_sheet.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -60,7 +61,19 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         );
 
       case AddTransactionStep.enterAmount:
-        _showAmountSheet(context);
+        showAmountSheet(
+          context: context,
+          onDigit: (d) {
+            context.read<AddTransactionBloc>().add(AmountDigitPressed(d));
+          },
+          onBackspace: () {
+            context.read<AddTransactionBloc>().add(AmountBackspacePressed());
+          },
+          onConfirm: () {
+            Navigator.pop(context);
+            context.read<AddTransactionBloc>().add(AmountConfirmation());
+          },
+        );
         break;
 
       case AddTransactionStep.selectCategory:
@@ -75,21 +88,5 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         Navigator.of(context).pop();
         break;
     }
-  }
-
-  void _showAmountSheet(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-
-      showModalBottomSheet(
-        context: context,
-        useRootNavigator: true,
-        isDismissible: false,
-        builder: (_) => const SizedBox(
-          height: 300,
-          child: Center(child: Text('AMOUNT SHEET')),
-        ),
-      );
-    });
   }
 }
