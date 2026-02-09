@@ -6,6 +6,7 @@ import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/amount_keypad_sheet.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/category_picker_sheet.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/type_selection_sheet.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -77,7 +78,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         break;
 
       case AddTransactionStep.selectCategory:
-        // TODO: show category sheet
+        showCategorySelectionSheet(context);
         break;
 
       case AddTransactionStep.addDetails:
