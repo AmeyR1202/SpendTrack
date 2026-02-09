@@ -8,6 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/amount_keypad_sheet.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/category_picker_sheet.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/sheets/type_selection_sheet.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/description_section.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/created_on_field.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/income_title_field.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/select_category_widget.dart';
+import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/transaction_header.dart';
 
 class AddTransactionPage extends StatefulWidget {
   const AddTransactionPage({super.key});
@@ -18,6 +23,9 @@ class AddTransactionPage extends StatefulWidget {
 
 class _AddTransactionPageState extends State<AddTransactionPage> {
   bool _typeSheetShown = false;
+
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -37,7 +45,84 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       listener: (context, state) {
         _handleStep(context, state.step);
       },
-      child: const Scaffold(backgroundColor: Colors.white),
+      child: Scaffold(
+        body: BlocBuilder<AddTransactionBloc, AddTransactionState>(
+          builder: (context, state) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 22,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 12),
+                    // TRANSACTION TYPE HEADER
+                    TransactionHeader(
+                      type: state.type ?? TransactionType.expense,
+                    ),
+                    SizedBox(height: 20),
+
+                    /// AMOUNT
+                    Text(
+                      state.amount == 0
+                          ? '0.00'
+                          : state.amount.toStringAsFixed(2),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontSize: 46,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    const SelectCategory(),
+
+                    /// CATEGORY
+                    const SizedBox(height: 12),
+
+                    IncomeTitleField(controller: _titleController),
+
+                    const SizedBox(height: 12),
+
+                    /// TITLE
+                    CreatedOnRow(date: DateTime.now()),
+
+                    const SizedBox(height: 12),
+
+                    /// DESCRIPTION
+                    DescriptionSection(controller: _descriptionController),
+
+                    const Spacer(),
+
+                    /// SUBMIT
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                          ),
+                          child: const Text(
+                            'Add Entry',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
