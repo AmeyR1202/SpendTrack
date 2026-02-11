@@ -31,7 +31,8 @@ class _CategorySelectionContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // TODO later → load from DB and we'll create type (income/expense) and render only those chip widgets which are included in income or expense
+    /// later → load from DB and we'll create type (income/expense)
+    /// and render only those chip widgets which are included in income or expense
     final categories = [
       CategoryEntity(
         categoryId: '1',

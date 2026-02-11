@@ -29,7 +29,7 @@ class GreetingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onBackground,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               TextSpan(
@@ -37,7 +37,7 @@ class GreetingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onBackground,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               TextSpan(
@@ -45,7 +45,7 @@ class GreetingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onBackground,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
             ],
@@ -56,7 +56,7 @@ class GreetingAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: const Icon(Icons.menu),
             iconSize: 28,
-            color: theme.colorScheme.onBackground,
+            color: theme.colorScheme.onSurface,
             onPressed: () => Scaffold.of(context).openEndDrawer(),
           ),
         ],
