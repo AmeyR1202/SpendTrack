@@ -1,11 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add_transaction_step.dart';
 
 class AddTransactionBloc
     extends Bloc<AddTransactionEvent, AddTransactionState> {
-  AddTransactionBloc() : super(AddTransactionState.initial()) {
+  final AddTransactionUseCase addTransactionUseCase;
+
+  AddTransactionBloc({required this.addTransactionUseCase})
+    : super(AddTransactionState.initial()) {
     on<FlowStarted>((event, emit) {
       emit(AddTransactionState.initial());
     });
@@ -43,9 +49,29 @@ class AddTransactionBloc
     on<NotesEntered>((event, emit) {
       emit(state.copyWith(notes: event.notes));
     });
+    on<TransactionSubmitted>((event, emit) async {
+      if (state.type == null || state.category == null || state.amount == 0) {
+        return;
+      }
 
-    on<TransactionSubmitted>((event, emit) {
-      emit(state.copyWith(step: AddTransactionStep.completed));
+      emit(state.copyWith(status: Status.loading));
+
+      final transaction = TransactionEntity(
+        transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
+        amount: state.amount.toDouble(),
+        categoryId: state.category!.categoryId,
+        dateTime: DateTime.now(),
+        notes: state.notes,
+      );
+
+      await addTransactionUseCase(transaction);
+
+      emit(
+        state.copyWith(
+          status: Status.success,
+          step: AddTransactionStep.completed,
+        ),
+      );
     });
   }
 }

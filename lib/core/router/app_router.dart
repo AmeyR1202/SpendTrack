@@ -3,6 +3,7 @@ import 'package:spend_wise/feature/expense/data/datasources/category_local_data_
 import 'package:spend_wise/feature/expense/data/datasources/transaction_local_data_source.dart';
 import 'package:spend_wise/feature/expense/data/repositories/category_repository_impl.dart';
 import 'package:spend_wise/feature/expense/data/repositories/transaction_repository_impl.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_summary_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/pages/add_transaction_page.dart';
@@ -44,7 +45,13 @@ final GoRouter appRouter = GoRouter(
       path: '/add-transaction',
       builder: (context, state) {
         return BlocProvider(
-          create: (_) => AddTransactionBloc(),
+          create: (_) => AddTransactionBloc(
+            addTransactionUseCase: AddTransactionUseCase(
+              repository: TransactionRepositoryImpl(
+                TransactionLocalDataSource(appDatabase),
+              ),
+            ),
+          ),
           child: const AddTransactionPage(),
         );
       },

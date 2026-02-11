@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
@@ -101,7 +102,11 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<AddTransactionBloc>().add(
+                              TransactionSubmitted(),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,
                           ),
@@ -171,7 +176,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         break;
 
       case AddTransactionStep.completed:
-        Navigator.of(context).pop();
+        context.go('/dashboard');
         break;
     }
   }
