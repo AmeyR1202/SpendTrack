@@ -1,14 +1,18 @@
 import 'package:spend_wise/core/state/status.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_summary_usecase.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_event.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final GetMonthlySummaryUsecase getMonthlySummaryUsecase;
+  final GetMonthlyTransactionUseCase getMonthlyTransactionsUseCase;
 
-  DashboardBloc({required this.getMonthlySummaryUsecase})
-    : super(DashboardState.initial()) {
+  DashboardBloc({
+    required this.getMonthlySummaryUsecase,
+    required this.getMonthlyTransactionsUseCase,
+  }) : super(DashboardState.initial()) {
     on<DashboardStarted>(_onDashboardStarted);
   }
 
@@ -20,8 +24,15 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     try {
       final summary = await getMonthlySummaryUsecase(event.month);
+      final transactions = await getMonthlyTransactionsUseCase(event.month);
 
-      emit(state.copyWith(status: Status.success, summary: summary));
+      emit(
+        state.copyWith(
+          status: Status.success,
+          summary: summary,
+          transactions: transactions,
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(

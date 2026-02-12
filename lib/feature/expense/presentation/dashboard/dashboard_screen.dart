@@ -6,6 +6,7 @@ import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_state.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/navigation/dashboard_nav_item.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/navigation/dashboard_nav_mapper.dart';
+import 'package:spend_wise/feature/expense/presentation/dashboard/widgets/transaction_list.dart';
 import 'package:spend_wise/feature/expense/presentation/user/bloc/user_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/widgets/balance_card.dart';
 import 'package:spend_wise/feature/expense/presentation/widgets/dashboard_bottom_nav.dart';
@@ -68,7 +69,6 @@ class _DashboardPageState extends State<DashboardPage> {
                     children: const [
                       TransactionStatCard(
                         label: 'Income',
-
                         percentage: 24, // dummy for now
                         color: Colors.green,
                         icon: Icons.trending_up,
@@ -82,11 +82,24 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
 
-                  Text('Transaction List will come here'),
+                  Row(
+                    children: [
+                      Text(
+                        'Transactions',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
 
                   const SizedBox(height: 32),
+                  Expanded(
+                    child: TransactionList(transactions: state.transactions),
+                  ),
                 ],
               ),
             );
