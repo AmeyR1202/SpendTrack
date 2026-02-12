@@ -59,7 +59,9 @@ class AddTransactionBloc
       final transaction = TransactionEntity(
         transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
         amount: state.amount.toDouble(),
+
         categoryId: state.category!.categoryId,
+        type: state.type!,
         dateTime: DateTime.now(),
         notes: state.notes,
       );

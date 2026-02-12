@@ -96,9 +96,12 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
                   Expanded(
-                    child: TransactionList(transactions: state.transactions),
+                    child: TransactionList(
+                      transactions: state.transactions,
+                      categories: state.categories,
+                    ),
                   ),
                 ],
               ),

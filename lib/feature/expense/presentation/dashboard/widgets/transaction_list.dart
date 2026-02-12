@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
+import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 
 class TransactionList extends StatelessWidget {
   final List<TransactionEntity> transactions;
+  final List<CategoryEntity> categories;
 
-  const TransactionList({super.key, required this.transactions});
+  const TransactionList({
+    super.key,
+    required this.transactions,
+    required this.categories,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +25,18 @@ class TransactionList extends StatelessWidget {
       itemBuilder: (context, index) {
         final tx = transactions[index];
 
-        final isExpense = tx.amount < 0;
-        final amount = tx.amount.abs();
+        /// Decide type
+        final isExpense = tx.type == TransactionType.expense;
+
+        /// Convert categoryId -> categoryName
+        final category = categories.firstWhere(
+          (c) => c.categoryId == tx.categoryId,
+          orElse: () => CategoryEntity(
+            categoryId: '',
+            categoryName: 'Unknown',
+            type: TransactionType.expense,
+          ),
+        );
 
         return Container(
           padding: const EdgeInsets.all(12),
@@ -29,33 +46,33 @@ class TransactionList extends StatelessWidget {
           ),
           child: Row(
             children: [
-              /// icon
+              /// ICON
               CircleAvatar(
                 radius: 22,
-                backgroundColor: (isExpense ? Colors.red : Colors.green)
+                backgroundColor: (isExpense ? Colors.orange : Colors.green)
                     .withOpacity(0.15),
                 child: Icon(
                   isExpense ? Icons.arrow_upward : Icons.arrow_downward,
-                  color: isExpense ? Colors.red : Colors.green,
+                  color: isExpense ? Colors.orange : Colors.green,
                 ),
               ),
 
               const SizedBox(width: 12),
 
-              /// title + date
+              /// CATEGORY + DATE
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      tx.notes ?? 'No notes',
+                      category.categoryName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      tx.dateTime.toString(),
+                      _formatDate(tx.dateTime),
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey.shade600,
@@ -65,12 +82,12 @@ class TransactionList extends StatelessWidget {
                 ),
               ),
 
-              /// amount
+              /// AMOUNT
               Text(
-                '${isExpense ? '-' : '+'}₹${amount.toStringAsFixed(2)}',
+                '${isExpense ? '-' : '+'}₹${tx.amount.abs().toStringAsFixed(2)}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: isExpense ? Colors.red : Colors.green,
+                  color: isExpense ? Colors.orange : Colors.green,
                 ),
               ),
             ],
@@ -78,5 +95,9 @@ class TransactionList extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _formatDate(DateTime date) {
+    return "${date.day}/${date.month}/${date.year}";
   }
 }

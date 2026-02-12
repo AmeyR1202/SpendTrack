@@ -1,4 +1,5 @@
 import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_summary_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_event.dart';
@@ -8,10 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final GetMonthlySummaryUsecase getMonthlySummaryUsecase;
   final GetMonthlyTransactionUseCase getMonthlyTransactionsUseCase;
+  final GetCategoriesUseCase getCategoriesUseCase;
 
   DashboardBloc({
     required this.getMonthlySummaryUsecase,
     required this.getMonthlyTransactionsUseCase,
+    required this.getCategoriesUseCase,
   }) : super(DashboardState.initial()) {
     on<DashboardStarted>(_onDashboardStarted);
   }
@@ -25,12 +28,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final summary = await getMonthlySummaryUsecase(event.month);
       final transactions = await getMonthlyTransactionsUseCase(event.month);
+      final categories = await getCategoriesUseCase();
 
       emit(
         state.copyWith(
           status: Status.success,
           summary: summary,
           transactions: transactions,
+          categories: categories,
         ),
       );
     } catch (e) {

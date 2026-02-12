@@ -604,6 +604,15 @@ class $TransactionsTable extends Transactions
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _notesMeta = const VerificationMeta('notes');
   @override
   late final GeneratedColumn<String> notes = GeneratedColumn<String>(
@@ -631,6 +640,7 @@ class $TransactionsTable extends Transactions
     amount,
     categoryId,
     timestamp,
+    type,
     notes,
     createdAt,
   ];
@@ -675,6 +685,14 @@ class $TransactionsTable extends Transactions
     } else if (isInserting) {
       context.missing(_timestampMeta);
     }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
     if (data.containsKey('notes')) {
       context.handle(
         _notesMeta,
@@ -712,6 +730,10 @@ class $TransactionsTable extends Transactions
         DriftSqlType.int,
         data['${effectivePrefix}timestamp'],
       )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
       notes: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}notes'],
@@ -734,6 +756,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
   final double amount;
   final String categoryId;
   final int timestamp;
+  final String type;
   final String? notes;
   final int createdAt;
   const Transaction({
@@ -741,6 +764,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     required this.amount,
     required this.categoryId,
     required this.timestamp,
+    required this.type,
     this.notes,
     required this.createdAt,
   });
@@ -751,6 +775,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     map['amount'] = Variable<double>(amount);
     map['category_id'] = Variable<String>(categoryId);
     map['timestamp'] = Variable<int>(timestamp);
+    map['type'] = Variable<String>(type);
     if (!nullToAbsent || notes != null) {
       map['notes'] = Variable<String>(notes);
     }
@@ -764,6 +789,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       amount: Value(amount),
       categoryId: Value(categoryId),
       timestamp: Value(timestamp),
+      type: Value(type),
       notes: notes == null && nullToAbsent
           ? const Value.absent()
           : Value(notes),
@@ -781,6 +807,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       amount: serializer.fromJson<double>(json['amount']),
       categoryId: serializer.fromJson<String>(json['categoryId']),
       timestamp: serializer.fromJson<int>(json['timestamp']),
+      type: serializer.fromJson<String>(json['type']),
       notes: serializer.fromJson<String?>(json['notes']),
       createdAt: serializer.fromJson<int>(json['createdAt']),
     );
@@ -793,6 +820,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       'amount': serializer.toJson<double>(amount),
       'categoryId': serializer.toJson<String>(categoryId),
       'timestamp': serializer.toJson<int>(timestamp),
+      'type': serializer.toJson<String>(type),
       'notes': serializer.toJson<String?>(notes),
       'createdAt': serializer.toJson<int>(createdAt),
     };
@@ -803,6 +831,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     double? amount,
     String? categoryId,
     int? timestamp,
+    String? type,
     Value<String?> notes = const Value.absent(),
     int? createdAt,
   }) => Transaction(
@@ -810,6 +839,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     amount: amount ?? this.amount,
     categoryId: categoryId ?? this.categoryId,
     timestamp: timestamp ?? this.timestamp,
+    type: type ?? this.type,
     notes: notes.present ? notes.value : this.notes,
     createdAt: createdAt ?? this.createdAt,
   );
@@ -821,6 +851,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           ? data.categoryId.value
           : this.categoryId,
       timestamp: data.timestamp.present ? data.timestamp.value : this.timestamp,
+      type: data.type.present ? data.type.value : this.type,
       notes: data.notes.present ? data.notes.value : this.notes,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
@@ -833,6 +864,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           ..write('amount: $amount, ')
           ..write('categoryId: $categoryId, ')
           ..write('timestamp: $timestamp, ')
+          ..write('type: $type, ')
           ..write('notes: $notes, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -841,7 +873,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
 
   @override
   int get hashCode =>
-      Object.hash(id, amount, categoryId, timestamp, notes, createdAt);
+      Object.hash(id, amount, categoryId, timestamp, type, notes, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -850,6 +882,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           other.amount == this.amount &&
           other.categoryId == this.categoryId &&
           other.timestamp == this.timestamp &&
+          other.type == this.type &&
           other.notes == this.notes &&
           other.createdAt == this.createdAt);
 }
@@ -859,6 +892,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   final Value<double> amount;
   final Value<String> categoryId;
   final Value<int> timestamp;
+  final Value<String> type;
   final Value<String?> notes;
   final Value<int> createdAt;
   final Value<int> rowid;
@@ -867,6 +901,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     this.amount = const Value.absent(),
     this.categoryId = const Value.absent(),
     this.timestamp = const Value.absent(),
+    this.type = const Value.absent(),
     this.notes = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -876,18 +911,21 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     required double amount,
     required String categoryId,
     required int timestamp,
+    required String type,
     this.notes = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        amount = Value(amount),
        categoryId = Value(categoryId),
-       timestamp = Value(timestamp);
+       timestamp = Value(timestamp),
+       type = Value(type);
   static Insertable<Transaction> custom({
     Expression<String>? id,
     Expression<double>? amount,
     Expression<String>? categoryId,
     Expression<int>? timestamp,
+    Expression<String>? type,
     Expression<String>? notes,
     Expression<int>? createdAt,
     Expression<int>? rowid,
@@ -897,6 +935,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       if (amount != null) 'amount': amount,
       if (categoryId != null) 'category_id': categoryId,
       if (timestamp != null) 'timestamp': timestamp,
+      if (type != null) 'type': type,
       if (notes != null) 'notes': notes,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
@@ -908,6 +947,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     Value<double>? amount,
     Value<String>? categoryId,
     Value<int>? timestamp,
+    Value<String>? type,
     Value<String?>? notes,
     Value<int>? createdAt,
     Value<int>? rowid,
@@ -917,6 +957,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       amount: amount ?? this.amount,
       categoryId: categoryId ?? this.categoryId,
       timestamp: timestamp ?? this.timestamp,
+      type: type ?? this.type,
       notes: notes ?? this.notes,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
@@ -938,6 +979,9 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     if (timestamp.present) {
       map['timestamp'] = Variable<int>(timestamp.value);
     }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
     if (notes.present) {
       map['notes'] = Variable<String>(notes.value);
     }
@@ -957,6 +1001,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
           ..write('amount: $amount, ')
           ..write('categoryId: $categoryId, ')
           ..write('timestamp: $timestamp, ')
+          ..write('type: $type, ')
           ..write('notes: $notes, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
@@ -1318,6 +1363,7 @@ typedef $$TransactionsTableCreateCompanionBuilder =
       required double amount,
       required String categoryId,
       required int timestamp,
+      required String type,
       Value<String?> notes,
       Value<int> createdAt,
       Value<int> rowid,
@@ -1328,6 +1374,7 @@ typedef $$TransactionsTableUpdateCompanionBuilder =
       Value<double> amount,
       Value<String> categoryId,
       Value<int> timestamp,
+      Value<String> type,
       Value<String?> notes,
       Value<int> createdAt,
       Value<int> rowid,
@@ -1359,6 +1406,11 @@ class $$TransactionsTableFilterComposer
 
   ColumnFilters<int> get timestamp => $composableBuilder(
     column: $table.timestamp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1402,6 +1454,11 @@ class $$TransactionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get notes => $composableBuilder(
     column: $table.notes,
     builder: (column) => ColumnOrderings(column),
@@ -1435,6 +1492,9 @@ class $$TransactionsTableAnnotationComposer
 
   GeneratedColumn<int> get timestamp =>
       $composableBuilder(column: $table.timestamp, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
 
   GeneratedColumn<String> get notes =>
       $composableBuilder(column: $table.notes, builder: (column) => column);
@@ -1478,6 +1538,7 @@ class $$TransactionsTableTableManager
                 Value<double> amount = const Value.absent(),
                 Value<String> categoryId = const Value.absent(),
                 Value<int> timestamp = const Value.absent(),
+                Value<String> type = const Value.absent(),
                 Value<String?> notes = const Value.absent(),
                 Value<int> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -1486,6 +1547,7 @@ class $$TransactionsTableTableManager
                 amount: amount,
                 categoryId: categoryId,
                 timestamp: timestamp,
+                type: type,
                 notes: notes,
                 createdAt: createdAt,
                 rowid: rowid,
@@ -1496,6 +1558,7 @@ class $$TransactionsTableTableManager
                 required double amount,
                 required String categoryId,
                 required int timestamp,
+                required String type,
                 Value<String?> notes = const Value.absent(),
                 Value<int> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -1504,6 +1567,7 @@ class $$TransactionsTableTableManager
                 amount: amount,
                 categoryId: categoryId,
                 timestamp: timestamp,
+                type: type,
                 notes: notes,
                 createdAt: createdAt,
                 rowid: rowid,
