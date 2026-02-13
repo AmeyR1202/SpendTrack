@@ -173,7 +173,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         break;
 
       case AddTransactionStep.addDetails:
-        // TODO: show details sheet
+        // todo: show details sheet
         break;
 
       case AddTransactionStep.completed:
