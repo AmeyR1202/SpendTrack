@@ -26,14 +26,15 @@ jobs:
       - name: Run analyzer
         run: flutter analyze
 
-      - name: Fail if hardcoded colors found
+      # 🚨 Design System Enforcement
+      - name: Fail if hardcoded colors found outside theme
         run: |
-          if grep -R "Colors\." lib/; then
-            echo "Hardcoded material colors detected. Use AppColors."
+          if grep -R "Colors\." lib/ --exclude-dir=theme; then
+            echo "Hardcoded material colors detected outside theme. Use AppColors."
             exit 1
           fi
 
-          if grep -R "Color(" lib/; then
-            echo "Direct Color constructor detected. Use AppColors."
+          if grep -R "Color(" lib/ --exclude-dir=theme; then
+            echo "Direct Color constructor detected outside theme. Use AppColors."
             exit 1
           fi
