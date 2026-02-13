@@ -8,7 +8,7 @@ class CategoryLocalDataSource {
   Future<List<Category>> getCategories() async {
     final count = await database.getCategories();
 
-    if (count == 0) {
+    if (count.isEmpty) {
       await _seedDefaultCategories();
     }
     return database.getCategories();
