@@ -20,15 +20,13 @@ class TransactionList extends StatelessWidget {
     }
 
     return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 100),
       itemCount: transactions.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final tx = transactions[index];
-
-        /// Decide type
         final isExpense = tx.type == TransactionType.expense;
 
-        /// Convert categoryId -> categoryName
         final category = categories.firstWhere(
           (c) => c.categoryId == tx.categoryId,
           orElse: () => CategoryEntity(
@@ -38,59 +36,72 @@ class TransactionList extends StatelessWidget {
           ),
         );
 
-        return Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: Colors.grey.shade100,
-          ),
-          child: Row(
-            children: [
-              /// ICON
-              CircleAvatar(
-                radius: 22,
-                backgroundColor: (isExpense ? Colors.orange : Colors.green)
-                    .withOpacity(0.15),
-                child: Icon(
-                  isExpense ? Icons.arrow_upward : Icons.arrow_downward,
-                  color: isExpense ? Colors.orange : Colors.green,
+        return InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: () {},
+          child: Ink(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                  color: Colors.black.withValues(alpha: 0.04),
                 ),
-              ),
+              ],
+            ),
+            child: Row(
+              children: [
+                /// ICON
+                Container(
+                  height: 44,
+                  width: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (isExpense ? Colors.orange : Colors.green)
+                        .withOpacity(0.12),
+                  ),
+                  child: Icon(
+                    isExpense ? Icons.arrow_upward : Icons.arrow_downward,
+                    color: isExpense ? Colors.orange : Colors.green,
+                  ),
+                ),
 
-              const SizedBox(width: 12),
+                const SizedBox(width: 14),
 
-              /// CATEGORY + DATE
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      category.categoryName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      _formatDate(tx.dateTime),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade600,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tx.categoryName,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                    ),
-                  ],
-                ),
-              ),
 
-              /// AMOUNT
-              Text(
-                '${isExpense ? '-' : '+'}₹${tx.amount.abs().toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: isExpense ? Colors.orange : Colors.green,
+                      const SizedBox(height: 4),
+                      Text(
+                        _formatDate(tx.dateTime),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+
+                Text(
+                  '${isExpense ? '-' : '+'}₹${tx.amount.abs().toStringAsFixed(2)}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    color: isExpense ? Colors.orange : Colors.green,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -98,6 +109,25 @@ class TransactionList extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    return "${date.day}/${date.month}/${date.year}";
+    return "${date.day} ${_month(date.month)}";
+  }
+
+  String _month(int m) {
+    const months = [
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return months[m];
   }
 }

@@ -20,9 +20,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     await Future.delayed(const Duration(seconds: 2));
 
     try {
-      print("Splash started");
       final user = await getUserUseCase();
-      print("User result = $user");
 
       emit(state.copyWith(status: Status.success, isUserPresent: user != null));
     } catch (e) {

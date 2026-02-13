@@ -62,6 +62,7 @@ class AddTransactionBloc
 
         categoryId: state.category!.categoryId,
         type: state.type!,
+        categoryName: state.category!.categoryName,
         dateTime: DateTime.now(),
         notes: state.notes,
       );
