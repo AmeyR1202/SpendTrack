@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 
 class CategoryChip extends StatelessWidget {
   final String label;
@@ -26,7 +27,7 @@ class CategoryChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: selected ? Colors.blue : Colors.grey.shade300,
+            color: selected ? AppColors.primary : AppColors.border,
           ),
         ),
         child: Row(
@@ -35,13 +36,13 @@ class CategoryChip extends StatelessWidget {
             Icon(
               icon,
               size: 18,
-              color: selected ? Colors.blue : Colors.grey.shade600,
+              color: selected ? AppColors.primary : AppColors.border,
             ),
             const SizedBox(width: 8),
             Text(
               label,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: selected ? Colors.blue : Colors.black87,
+                color: selected ? AppColors.primary : AppColors.textPrimary,
                 fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
               ),
             ),

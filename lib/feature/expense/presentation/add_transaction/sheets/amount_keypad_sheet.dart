@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/numeric_pad.dart';
@@ -69,7 +70,7 @@ Future<void> showAmountSheet({
                       ElevatedButton(
                         onPressed: onConfirm,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
+                          backgroundColor: AppColors.primary,
                         ),
                         child: const Text(
                           'Continue',

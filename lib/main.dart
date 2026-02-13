@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/database/app_database_instance.dart';
 import 'package:spend_wise/core/router/app_router.dart';
+import 'package:spend_wise/core/theme/app_theme.dart';
 import 'package:spend_wise/feature/expense/data/datasources/user_local_data_source.dart';
 import 'package:spend_wise/feature/expense/data/repositories/user_repository_impl.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_user_usecase.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        theme: ThemeData(fontFamily: 'Inter', useMaterial3: true),
+        theme: AppTheme.dark(),
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
       ),

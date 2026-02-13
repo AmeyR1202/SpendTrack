@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
@@ -107,7 +108,7 @@ class _CategorySelectionContent extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: AppColors.primary,
                   ),
                   child: const Text(
                     'Continue',

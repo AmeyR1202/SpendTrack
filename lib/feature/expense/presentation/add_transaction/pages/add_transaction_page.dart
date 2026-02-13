@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
@@ -108,7 +109,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
+                            backgroundColor: AppColors.primary,
                           ),
                           child: const Text(
                             'Add Entry',

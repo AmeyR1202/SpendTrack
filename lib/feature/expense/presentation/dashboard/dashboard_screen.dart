@@ -1,6 +1,7 @@
 import 'package:spend_wise/core/presentation/widgets/app_drawer.dart';
 import 'package:spend_wise/core/presentation/widgets/greeting_app_bar.dart';
 import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_event.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_state.dart';
@@ -70,14 +71,15 @@ class _DashboardPageState extends State<DashboardPage> {
                       TransactionStatCard(
                         label: 'Income',
                         percentage: 24, // dummy for now
-                        color: Colors.green,
+                        color: AppColors.income,
+
                         icon: Icons.trending_up,
                       ),
                       SizedBox(width: 12),
                       TransactionStatCard(
                         label: 'Expense',
                         percentage: -42, // dummy for now
-                        color: Colors.orange,
+                        color: AppColors.expense,
                         icon: Icons.trending_down,
                       ),
                     ],

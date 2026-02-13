@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 
 class BalanceCard extends StatelessWidget {
   final double balance;
@@ -12,7 +13,7 @@ class BalanceCard extends StatelessWidget {
       height: 200,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF2A2E35),
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -42,7 +43,7 @@ class BalanceCard extends StatelessWidget {
                       Text(
                         '\$${balance.toStringAsFixed(2)}',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
@@ -50,11 +51,11 @@ class BalanceCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       const Text(
                         'Balance',
-                        style: TextStyle(color: Colors.white70),
+                        style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ],
                   ),
-                  const Icon(Icons.more_horiz, color: Colors.white),
+                  const Icon(Icons.more_horiz, color: AppColors.textPrimary),
                 ],
               ),
 
@@ -66,9 +67,10 @@ class BalanceCard extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progress,
                   minHeight: 6,
-                  backgroundColor: Colors.white12,
+                  backgroundColor: AppColors.textSecondary,
                   valueColor: const AlwaysStoppedAnimation<Color>(
-                    Color(0xFFF4B400), // yellow accent
+                    AppColors.warning,
+                    // yellow accent
                   ),
                 ),
               ),
@@ -81,7 +83,10 @@ class BalanceCard extends StatelessWidget {
                 children: [
                   Text(
                     '**** **** 402',
-                    style: TextStyle(color: Colors.white, letterSpacing: 2),
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
+                      letterSpacing: 2,
+                    ),
                   ),
                   SizedBox(
                     width: 40,
@@ -121,7 +126,7 @@ class BalanceCard extends StatelessWidget {
         height: 120,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white.withValues(alpha: 0.05),
+          color: AppColors.textPrimary.withValues(alpha: 0.05),
         ),
       ),
     );

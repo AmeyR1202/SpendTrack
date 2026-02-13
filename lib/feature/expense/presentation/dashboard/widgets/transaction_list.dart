@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
@@ -34,12 +35,12 @@ class TransactionList extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
-              color: Colors.white,
+              color: AppColors.surface,
               boxShadow: [
                 BoxShadow(
                   blurRadius: 6,
                   offset: const Offset(0, 2),
-                  color: Colors.black.withValues(alpha: 0.04),
+                  color: AppColors.background.withValues(alpha: 0.4),
                 ),
               ],
             ),
@@ -51,12 +52,12 @@ class TransactionList extends StatelessWidget {
                   width: 44,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: (isExpense ? Colors.orange : Colors.green)
+                    color: (isExpense ? AppColors.expense : AppColors.income)
                         .withValues(alpha: 0.12),
                   ),
                   child: Icon(
                     isExpense ? Icons.arrow_upward : Icons.arrow_downward,
-                    color: isExpense ? Colors.orange : Colors.green,
+                    color: isExpense ? AppColors.expense : AppColors.income,
                   ),
                 ),
 
@@ -74,9 +75,9 @@ class TransactionList extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         _formatDate(tx.dateTime),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: AppColors.textMuted,
                         ),
                       ),
                     ],
@@ -88,7 +89,7 @@ class TransactionList extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
-                    color: isExpense ? Colors.orange : Colors.green,
+                    color: isExpense ? AppColors.expense : AppColors.income,
                   ),
                 ),
               ],
