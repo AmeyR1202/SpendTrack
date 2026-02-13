@@ -22,19 +22,10 @@ class TransactionList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.only(bottom: 100),
       itemCount: transactions.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final tx = transactions[index];
         final isExpense = tx.type == TransactionType.expense;
-
-        final category = categories.firstWhere(
-          (c) => c.categoryId == tx.categoryId,
-          orElse: () => CategoryEntity(
-            categoryId: '',
-            categoryName: 'Unknown',
-            type: TransactionType.expense,
-          ),
-        );
 
         return InkWell(
           borderRadius: BorderRadius.circular(18),
@@ -61,7 +52,7 @@ class TransactionList extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: (isExpense ? Colors.orange : Colors.green)
-                        .withOpacity(0.12),
+                        .withValues(alpha: 0.12),
                   ),
                   child: Icon(
                     isExpense ? Icons.arrow_upward : Icons.arrow_downward,
