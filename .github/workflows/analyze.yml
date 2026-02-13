@@ -1,0 +1,39 @@
+name: Flutter Analyze
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run analyzer
+        run: flutter analyze
+
+      - name: Fail if hardcoded colors found
+        run: |
+          if grep -R "Colors\." lib/; then
+            echo "Hardcoded material colors detected. Use AppColors."
+            exit 1
+          fi
+
+          if grep -R "Color(" lib/; then
+            echo "Direct Color constructor detected. Use AppColors."
+            exit 1
+          fi
