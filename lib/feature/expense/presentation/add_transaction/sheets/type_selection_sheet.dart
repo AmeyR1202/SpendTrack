@@ -14,7 +14,7 @@ Future<void> showTypeSelectionSheet({
     ),
     builder: (_) {
       return Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: TransactionTypeSelector(
           onExpenseTap: onExpenseTap,
           onIncomeTap: onIncomeTap,

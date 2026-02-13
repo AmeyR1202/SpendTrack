@@ -20,7 +20,7 @@ class SelectCategory extends StatelessWidget {
       ),
       onPressed: () {},
 
-      child: Row(
+      child: const Row(
         mainAxisSize: MainAxisSize.min,
 
         children: [

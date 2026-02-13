@@ -32,7 +32,7 @@ class CreatedOnRow extends StatelessWidget {
               "Created on",
               style: TextStyle(color: Colors.grey.shade600, fontSize: 16),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               formatted,
               style: const TextStyle(fontWeight: FontWeight.w500),

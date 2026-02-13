@@ -76,10 +76,10 @@ class BalanceCard extends StatelessWidget {
               const Spacer(),
 
               // Bottom row
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     '**** **** 402',
                     style: TextStyle(color: Colors.white, letterSpacing: 2),
                   ),
@@ -87,7 +87,7 @@ class BalanceCard extends StatelessWidget {
                     width: 40,
                     height: 20,
                     child: Stack(
-                      children: const [
+                      children: [
                         Positioned(left: 0, child: _CardDot(color: Colors.red)),
                         Positioned(
                           left: 12,

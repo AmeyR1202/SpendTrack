@@ -61,4 +61,6 @@ class MyApp extends StatelessWidget {
 3. Add a off white or cream color theme app wide
 
 4. Dark theme as well (v2)
+
+5. Add couple of currencies as well
  */

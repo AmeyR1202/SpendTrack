@@ -63,7 +63,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     TransactionHeader(
                       type: state.type ?? TransactionType.expense,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     /// AMOUNT
                     Text(

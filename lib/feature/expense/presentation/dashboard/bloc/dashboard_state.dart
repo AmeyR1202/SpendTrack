@@ -19,7 +19,7 @@ class DashboardState {
   });
 
   factory DashboardState.initial() {
-    return DashboardState(status: Status.initial, transactions: []);
+    return const DashboardState(status: Status.initial, transactions: []);
   }
 
   DashboardState copyWith({

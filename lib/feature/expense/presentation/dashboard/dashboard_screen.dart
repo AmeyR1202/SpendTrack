@@ -65,8 +65,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
                   const SizedBox(height: 16),
 
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       TransactionStatCard(
                         label: 'Income',
                         percentage: 24, // dummy for now
@@ -84,7 +84,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  Row(
+                  const Row(
                     children: [
                       Text(
                         'Transactions',
