@@ -26,3 +26,22 @@ jobs:
 
       - name: Run analyzer
         run: flutter analyze
+
+      # 🚨 Design System Enforcement
+      - name: Enforce design system (no hardcoded colors)
+        run: |
+          echo "Checking for hardcoded colors outside theme..."
+
+          VIOLATIONS=$(grep -R "Colors\." lib/ --exclude-dir=theme || true)
+          VIOLATIONS2=$(grep -R "Color(" lib/ --exclude-dir=theme || true)
+
+          if [ -n "$VIOLATIONS" ] || [ -n "$VIOLATIONS2" ]; then
+            echo ""
+            echo "Hardcoded colors detected. Use AppColors or theme tokens."
+            echo ""
+            echo "$VIOLATIONS"
+            echo "$VIOLATIONS2"
+            exit 1
+          fi
+
+          echo "No hardcoded colors found."

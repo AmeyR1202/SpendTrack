@@ -13,6 +13,8 @@ class AppColors {
   static const income = Color(0xFF1DB954);
   static const expense = Color(0xFFFF7043);
   static const warning = Color(0xFFF4B400);
+  static const error = Colors.red;
+  static const blue = Colors.blue;
 
   // text
   static const textPrimary = Colors.white;
