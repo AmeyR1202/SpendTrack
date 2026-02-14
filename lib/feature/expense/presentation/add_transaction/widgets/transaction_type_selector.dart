@@ -45,7 +45,7 @@ class TransactionTypeSelector extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onExpenseTap,
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(AppColors.warning),
+                backgroundColor: WidgetStateProperty.all(Colors.orange),
               ),
               child: Text(
                 'Add Expense',
