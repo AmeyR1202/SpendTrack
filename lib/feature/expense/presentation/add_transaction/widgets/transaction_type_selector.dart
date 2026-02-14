@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 
 class TransactionTypeSelector extends StatelessWidget {
   final VoidCallback onExpenseTap;
@@ -30,9 +30,7 @@ class TransactionTypeSelector extends StatelessWidget {
               onPressed: onIncomeTap,
 
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  const Color(0xFF4CAF50),
-                ),
+                backgroundColor: WidgetStateProperty.all(AppColors.income),
               ),
               child: Text(
                 'Add Income',
@@ -47,9 +45,7 @@ class TransactionTypeSelector extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onExpenseTap,
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  const Color(0xFFFFCB2E),
-                ),
+                backgroundColor: WidgetStateProperty.all(AppColors.warning),
               ),
               child: Text(
                 'Add Expense',
