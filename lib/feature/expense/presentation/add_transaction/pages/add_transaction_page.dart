@@ -114,7 +114,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                           child: const Text(
                             'Add Entry',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
