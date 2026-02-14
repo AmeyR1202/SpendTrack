@@ -31,8 +31,8 @@ jobs:
         run: |
           echo "Checking for hardcoded colors outside theme..."
 
-          VIOLATIONS=$(grep -R "Colors\." lib/ --exclude-dir=core/theme || true)
-          VIOLATIONS2=$(grep -R "Color(" lib/ --exclude-dir=core/theme || true)
+          VIOLATIONS=$(grep -R "Colors\." lib/ --exclude-dir=theme || true)
+          VIOLATIONS2=$(grep -R "Color(" lib/ --exclude-dir=theme || true)
 
           if [ -n "$VIOLATIONS" ] || [ -n "$VIOLATIONS2" ]; then
             echo ""
