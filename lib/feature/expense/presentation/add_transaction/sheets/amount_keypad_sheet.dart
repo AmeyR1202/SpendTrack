@@ -75,7 +75,7 @@ Future<void> showAmountSheet({
                         child: const Text(
                           'Continue',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.textPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),

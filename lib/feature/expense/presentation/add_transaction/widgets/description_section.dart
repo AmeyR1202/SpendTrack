@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 
 class DescriptionSection extends StatelessWidget {
   final TextEditingController controller;
@@ -17,7 +18,7 @@ class DescriptionSection extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey, width: 0.2),
+        border: Border.all(color: AppColors.border, width: 0.2),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12),

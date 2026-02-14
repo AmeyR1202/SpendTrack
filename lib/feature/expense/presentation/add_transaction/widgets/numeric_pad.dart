@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/widgets/circle_button.dart';
 
 class NumericPad extends StatelessWidget {
@@ -27,7 +28,7 @@ class NumericPad extends StatelessWidget {
               size: 70,
               onTap: onTap,
               child: text == '⌫'
-                  ? const Icon(Icons.backspace_outlined, color: Colors.red)
+                  ? const Icon(Icons.backspace_outlined, color: AppColors.error)
                   : Text(
                       text,
                       style: theme.textTheme.titleLarge?.copyWith(

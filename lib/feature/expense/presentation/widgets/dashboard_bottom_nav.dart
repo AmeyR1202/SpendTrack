@@ -1,3 +1,4 @@
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/navigation/dashboard_nav_item.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class DashboardBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final active = Theme.of(context).colorScheme.primary;
-    const inactive = Colors.grey;
+    const inactive = AppColors.textSecondary;
 
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),

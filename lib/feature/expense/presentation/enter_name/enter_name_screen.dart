@@ -1,4 +1,5 @@
 import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/presentation/enter_name/bloc/enter_name_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/enter_name/bloc/enter_name_event.dart';
 import 'package:spend_wise/feature/expense/presentation/enter_name/bloc/enter_name_state.dart';
@@ -86,7 +87,7 @@ class EnterNameScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              cursorColor: Colors.black,
+                              cursorColor: AppColors.background,
                             );
                           },
                         ),
@@ -115,8 +116,8 @@ class EnterNameScreen extends StatelessWidget {
                               : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isEnabled
-                                ? Colors.blue
-                                : Colors.transparent,
+                                ? AppColors.blue
+                                : AppColors.background,
                             disabledBackgroundColor: const Color.fromARGB(
                               255,
                               0,
@@ -132,7 +133,7 @@ class EnterNameScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                             ),
                           ),
                         ),

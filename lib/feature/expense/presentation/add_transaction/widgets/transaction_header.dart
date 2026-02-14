@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 
 class TransactionHeader extends StatelessWidget {
@@ -16,12 +17,12 @@ class TransactionHeader extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         gradient: isExpense
             ? const LinearGradient(
-                colors: [Colors.orange, Colors.orange],
+                colors: [AppColors.warning, AppColors.warning],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
             : const LinearGradient(
-                colors: [Color(0xFF6BCB77), Color(0xFF1B8E3E)],
+                colors: [AppColors.income, AppColors.income],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -31,13 +32,13 @@ class TransactionHeader extends StatelessWidget {
         children: [
           Icon(
             isExpense ? Icons.arrow_upward : Icons.arrow_downward,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
           const SizedBox(width: 8),
           Text(
             isExpense ? "Expense" : "Income",
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.bold,
             ),
           ),

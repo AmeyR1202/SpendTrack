@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 
 class SelectCategory extends StatelessWidget {
   const SelectCategory({super.key});
@@ -8,14 +9,14 @@ class SelectCategory extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
+        shadowColor: AppColors.background,
+        backgroundColor: AppColors.background,
 
-        foregroundColor: Colors.black,
+        foregroundColor: AppColors.background,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Colors.grey, width: 0.2),
+          side: const BorderSide(color: AppColors.border, width: 0.2),
         ),
       ),
       onPressed: () {},
@@ -24,13 +25,13 @@ class SelectCategory extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
 
         children: [
-          Icon(Icons.add, size: 24, color: Colors.black),
+          Icon(Icons.add, size: 24, color: AppColors.background),
           SizedBox(width: 5),
           Text(
             'Select Category',
             style: TextStyle(
               fontSize: 15,
-              color: Colors.black,
+              color: AppColors.background,
               fontWeight: FontWeight.w600,
             ),
           ),

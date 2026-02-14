@@ -17,7 +17,7 @@ class BalanceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: AppColors.background.withValues(alpha: 0.25),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -93,10 +93,13 @@ class BalanceCard extends StatelessWidget {
                     height: 20,
                     child: Stack(
                       children: [
-                        Positioned(left: 0, child: _CardDot(color: Colors.red)),
+                        Positioned(
+                          left: 0,
+                          child: _CardDot(color: AppColors.error),
+                        ),
                         Positioned(
                           left: 12,
-                          child: _CardDot(color: Colors.orange),
+                          child: _CardDot(color: AppColors.expense),
                         ),
                       ],
                     ),
