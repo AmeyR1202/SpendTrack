@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 
 class CreatedOnRow extends StatelessWidget {
   final DateTime date;
@@ -22,15 +23,15 @@ class CreatedOnRow extends StatelessWidget {
         padding: const EdgeInsets.all(14.0),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.calendar_today_outlined,
-              color: Colors.grey.shade600,
+              color: AppColors.textMuted,
               size: 20,
             ),
             const SizedBox(width: 12),
-            Text(
+            const Text(
               "Created on",
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 16),
+              style: TextStyle(color: AppColors.textMuted, fontSize: 16),
             ),
             const Spacer(),
             Text(
