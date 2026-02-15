@@ -99,7 +99,7 @@ class BalanceCard extends StatelessWidget {
                         ),
                         Positioned(
                           left: 12,
-                          child: _CardDot(color: AppColors.expense),
+                          child: _CardDot(color: AppColors.warning),
                         ),
                       ],
                     ),
