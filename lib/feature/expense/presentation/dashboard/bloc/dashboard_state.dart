@@ -9,8 +9,10 @@ class DashboardState {
   final String? errorMessage;
   final List<TransactionEntity> transactions;
   final List<CategoryEntity> categories;
+  final bool showOpeningBalance;
 
   const DashboardState({
+    this.showOpeningBalance = true,
     required this.status,
     this.summary,
     this.errorMessage,

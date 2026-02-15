@@ -16,7 +16,7 @@ class EnterNameScreen extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status == Status.success) {
-          context.go('/dashboard');
+          context.go('/opening-balance');
         }
 
         if (state.status == Status.error && state.errorMessage != null) {

@@ -29,7 +29,9 @@ class TransactionLocalDataSource {
     );
   }
 
-  Future<List<Transaction>> getTransactionsForMonth(DateTime month) {
-    return database.getTransactionForMonth(month);
+  Future<List<Transaction>> getTransactionsForMonth(DateTime month) async {
+    final result = await database.getTransactionForMonth(month);
+
+    return result;
   }
 }

@@ -15,15 +15,11 @@ class GetMonthlySummaryUsecase {
   Future<MonthlySummaryEntity> call(DateTime month) async {
     final transactions = await repository.getTransactionsForMonth(month);
 
-    final categories = await categoryRepository.getCategories();
-
-    final categoryTypeMap = {for (final c in categories) c.categoryId: c.type};
-
     double totalIncome = 0;
     double totalExpense = 0;
 
     for (final t in transactions) {
-      final type = categoryTypeMap[t.categoryId];
+      final type = t.type;
 
       if (type == TransactionType.income) {
         totalIncome += t.amount;
