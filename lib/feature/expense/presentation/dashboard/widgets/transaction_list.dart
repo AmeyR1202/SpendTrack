@@ -69,15 +69,19 @@ class TransactionList extends StatelessWidget {
                     children: [
                       Text(
                         tx.categoryName,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
+                        ),
                       ),
 
                       const SizedBox(height: 4),
                       Text(
                         _formatDate(tx.dateTime),
                         style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textMuted,
+                          fontSize: 14,
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -88,7 +92,7 @@ class TransactionList extends StatelessWidget {
                   '${isExpense ? '-' : '+'}₹${tx.amount.abs().toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: 15,
+                    fontSize: 20,
                     color: isExpense ? AppColors.expense : AppColors.income,
                   ),
                 ),
@@ -101,7 +105,11 @@ class TransactionList extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    return "${date.day} ${_month(date.month)}";
+    final hour = date.hour > 12 ? date.hour - 12 : date.hour;
+    final amPm = date.hour >= 12 ? "PM" : "AM";
+
+    return "${date.day} ${_month(date.month)} ${date.year}, "
+        "$hour:${date.minute.toString().padLeft(2, '0')} $amPm";
   }
 
   String _month(int m) {
