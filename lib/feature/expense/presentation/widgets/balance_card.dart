@@ -23,114 +23,83 @@ class BalanceCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Decorative circles
-          _decorativeCircle(top: -40, right: -40),
-          _decorativeCircle(bottom: -30, left: -30),
-
-          // Main content
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          // Top row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Top row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '\$${balance.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'Balance',
-                        style: TextStyle(color: AppColors.textSecondary),
-                      ),
-                    ],
-                  ),
-                  const Icon(Icons.more_horiz, color: AppColors.textPrimary),
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              // Progress bar
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: progress,
-                  minHeight: 6,
-                  backgroundColor: AppColors.textSecondary,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppColors.warning,
-                    // yellow accent
-                  ),
-                ),
-              ),
-
-              const Spacer(),
-
-              // Bottom row
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '**** **** 402',
-                    style: TextStyle(
+                    '₹${balance.toStringAsFixed(2)}',
+                    style: const TextStyle(
                       color: AppColors.textPrimary,
-                      letterSpacing: 2,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    width: 40,
-                    height: 20,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 0,
-                          child: _CardDot(color: AppColors.error),
-                        ),
-                        Positioned(
-                          left: 12,
-                          child: _CardDot(color: AppColors.warning),
-                        ),
-                      ],
-                    ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Balance',
+                    style: TextStyle(color: AppColors.textSecondary),
                   ),
                 ],
+              ),
+              const Icon(Icons.more_horiz, color: AppColors.textPrimary),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          // Progress bar
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: progress,
+              minHeight: 6,
+              backgroundColor: AppColors.textSecondary,
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.warning,
+                // yellow accent
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 40),
+
+          // Bottom row
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '**** **** 402',
+                style: TextStyle(
+                  color: AppColors.textPrimary,
+                  letterSpacing: 2,
+                ),
+              ),
+              SizedBox(
+                width: 40,
+                height: 20,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 0,
+                      child: _CardDot(color: AppColors.error),
+                    ),
+                    Positioned(
+                      left: 12,
+                      child: _CardDot(color: AppColors.warning),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _decorativeCircle({
-    double? top,
-    double? left,
-    double? right,
-    double? bottom,
-  }) {
-    return Positioned(
-      top: top,
-      left: left,
-      right: right,
-      bottom: bottom,
-      child: Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.textPrimary.withValues(alpha: 0.05),
-        ),
       ),
     );
   }

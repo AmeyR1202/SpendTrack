@@ -62,10 +62,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
                   const SizedBox(height: 16),
 
-                  const TransactionsHeader(),
-
-                  const SizedBox(height: 16),
-
                   const Row(
                     children: [
                       TransactionStatCard(
@@ -86,17 +82,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  const Row(
-                    children: [
-                      Text(
-                        'Transactions',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const TransactionsHeader(),
 
                   const SizedBox(height: 16),
                   Expanded(
