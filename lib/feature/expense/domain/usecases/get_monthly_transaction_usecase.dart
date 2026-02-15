@@ -6,7 +6,12 @@ class GetMonthlyTransactionUseCase {
 
   GetMonthlyTransactionUseCase({required this.repository});
 
-  Future<List<TransactionEntity>> call(DateTime month) {
-    return repository.getTransactionsForMonth(month);
+  Future<List<TransactionEntity>> call(DateTime month) async {
+    final transactions = await repository.getTransactionsForMonth(month);
+
+    final sorted = [...transactions]
+      ..sort((a, b) => b.dateTime.compareTo(a.dateTime));
+
+    return sorted;
   }
 }

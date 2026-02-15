@@ -41,7 +41,7 @@ class BalanceCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '\$${balance.toStringAsFixed(2)}',
+                        '₹${balance.toStringAsFixed(2)}',
                         style: const TextStyle(
                           color: AppColors.textPrimary,
                           fontSize: 28,

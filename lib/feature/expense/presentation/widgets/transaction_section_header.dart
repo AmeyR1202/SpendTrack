@@ -8,8 +8,8 @@ class TransactionsHeader extends StatelessWidget {
     return Text(
       'Transactions',
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-        fontWeight: FontWeight.w900,
-        fontSize: 28,
+        fontWeight: FontWeight.w700,
+        fontSize: 22,
       ),
     );
   }
