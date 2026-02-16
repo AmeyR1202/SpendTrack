@@ -3,7 +3,7 @@ description: "A very good project by a good developer."
 
 publish_to: "none"
 
-version: 1.0.0 # Major.Minor.Patch
+version: 1.1.0 # Major.Minor.Patch
 
 environment:
   sdk: ^3.10.7
