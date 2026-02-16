@@ -1,4 +1,5 @@
 import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/delete_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_summary_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_transaction_usecase.dart';
@@ -10,13 +11,19 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final GetMonthlySummaryUsecase getMonthlySummaryUsecase;
   final GetMonthlyTransactionUseCase getMonthlyTransactionsUseCase;
   final GetCategoriesUseCase getCategoriesUseCase;
+  final DeleteTransactionUsecase deleteTransactionUseCase;
 
   DashboardBloc({
     required this.getMonthlySummaryUsecase,
     required this.getMonthlyTransactionsUseCase,
     required this.getCategoriesUseCase,
+    required this.deleteTransactionUseCase,
   }) : super(DashboardState.initial()) {
     on<DashboardStarted>(_onDashboardStarted);
+    on<TransactionDeleted>((event, emit) async {
+      await deleteTransactionUseCase(event.id);
+      add(DashboardStarted(DateTime.now()));
+    });
   }
 
   Future<void> _onDashboardStarted(
