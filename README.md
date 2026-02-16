@@ -1,16 +1,41 @@
-<!-- # expense_tracker
+# SpendWise – Smart Expense Tracker
 
-A new Flutter project.
+SpendWise is a production-oriented expense management application built with Flutter using Clean Architecture and BLoC.
 
-## Getting Started
+It enables users to track daily spending, organize transactions, and understand financial habits while being engineered for long-term scalability and maintainability.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## What You Can Do
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Record expenses in seconds
+- Categorize transactions
+- Track monthly spending
+- View complete history
+- Build awareness of money patterns
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference. -->
+---
+
+## Engineering Highlights
+
+- Clean Architecture (presentation → domain → data)
+- Clear separation of concerns
+- Repository abstraction (ready for API/cloud migration)
+- Predictable state management using BLoC
+- Testable business logic
+- Offline-first design
+- Built with future multi-user capability in mind
+
+This structure mirrors how production mobile systems are built in industry teams.
+
+---
+
+## Tech Stack
+
+Flutter • Dart • BLoC • Repository Pattern • Dependency Injection
+
+## Author
+
+**Amey Rakhe**  
+Flutter Developer  
+Flutter Intern @ Reliance Jio (6 months)
