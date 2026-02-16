@@ -41,7 +41,7 @@ class TransactionList extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
               color: AppColors.expense,
             ),
-            child: const Icon(Icons.delete, color: Colors.white),
+            child: const Icon(Icons.delete, color: AppColors.textPrimary),
           ),
           onDismissed: (_) {
             context.read<DashboardBloc>().add(
