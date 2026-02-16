@@ -43,4 +43,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
         )
         .toList();
   }
+
+  @override
+  Future<void> deleteTransaction(String id) {
+    return localDataSource.deleteTransaction(id);
+  }
 }

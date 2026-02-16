@@ -4,6 +4,7 @@ import 'package:spend_wise/feature/expense/data/datasources/transaction_local_da
 import 'package:spend_wise/feature/expense/data/repositories/category_repository_impl.dart';
 import 'package:spend_wise/feature/expense/data/repositories/transaction_repository_impl.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/delete_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_summary_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_transaction_usecase.dart';
@@ -43,6 +44,11 @@ final GoRouter appRouter = GoRouter(
             getCategoriesUseCase: GetCategoriesUseCase(
               repository: CategoryRepositoryImpl(
                 CategoryLocalDataSource(appDatabase),
+              ),
+            ),
+            deleteTransactionUseCase: DeleteTransactionUsecase(
+              TransactionRepositoryImpl(
+                TransactionLocalDataSource(appDatabase),
               ),
             ),
           ),

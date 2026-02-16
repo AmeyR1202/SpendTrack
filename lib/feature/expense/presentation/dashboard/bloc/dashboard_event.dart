@@ -7,3 +7,9 @@ class DashboardStarted extends DashboardEvent {
 
   const DashboardStarted(this.month);
 }
+
+class TransactionDeleted extends DashboardEvent {
+  final String id;
+
+  TransactionDeleted(this.id);
+}

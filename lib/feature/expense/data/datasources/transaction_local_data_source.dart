@@ -34,4 +34,10 @@ class TransactionLocalDataSource {
 
     return result;
   }
+
+  Future<void> deleteTransaction(String id) {
+    return (database.delete(
+      database.transactions,
+    )..where((t) => t.id.equals(id))).go();
+  }
 }
