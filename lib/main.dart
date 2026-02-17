@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spend_wise/core/database/app_database_instance.dart';
+import 'package:spend_wise/core/di/injection.dart';
 import 'package:spend_wise/core/router/app_router.dart';
 import 'package:spend_wise/core/theme/app_theme.dart';
-import 'package:spend_wise/feature/expense/data/datasources/user_local_data_source.dart';
-import 'package:spend_wise/feature/expense/data/repositories/user_repository_impl.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/get_user_usecase.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/save_user_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/enter_name/bloc/enter_name_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/splash/bloc/splash_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/user/bloc/user_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/user/bloc/user_event.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initDependencies();
   runApp(const MyApp());
 }
 
@@ -23,26 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => SplashBloc(getUserUseCase: sl())),
+
+        BlocProvider(create: (_) => EnterNameBloc(saveUserUseCase: sl())),
+
         BlocProvider(
-          create: (_) => SplashBloc(
-            getUserUseCase: GetUserUseCase(
-              repository: UserRepositoryImpl(UserLocalDataSource(appDatabase)),
-            ),
-          ),
-        ),
-        BlocProvider(
-          create: (_) => EnterNameBloc(
-            saveUserUseCase: SaveUserUseCase(
-              repository: UserRepositoryImpl(UserLocalDataSource(appDatabase)),
-            ),
-          ),
-        ),
-        BlocProvider(
-          create: (_) => UserBloc(
-            getUserUseCase: GetUserUseCase(
-              repository: UserRepositoryImpl(UserLocalDataSource(appDatabase)),
-            ),
-          )..add(LoadUser()),
+          create: (_) => UserBloc(getUserUseCase: sl())..add(LoadUser()),
         ),
       ],
       child: MaterialApp.router(

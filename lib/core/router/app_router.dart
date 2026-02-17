@@ -1,13 +1,4 @@
-import 'package:spend_wise/core/database/app_database_instance.dart';
-import 'package:spend_wise/feature/expense/data/datasources/category_local_data_source.dart';
-import 'package:spend_wise/feature/expense/data/datasources/transaction_local_data_source.dart';
-import 'package:spend_wise/feature/expense/data/repositories/category_repository_impl.dart';
-import 'package:spend_wise/feature/expense/data/repositories/transaction_repository_impl.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/delete_transaction_usecase.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_summary_usecase.dart';
-import 'package:spend_wise/feature/expense/domain/usecases/get_monthly_transaction_usecase.dart';
+import 'package:spend_wise/core/di/injection.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/pages/add_transaction_page.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_bloc.dart';
@@ -28,36 +19,15 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         return BlocProvider(
           create: (_) => DashboardBloc(
-            getMonthlySummaryUsecase: GetMonthlySummaryUsecase(
-              repository: TransactionRepositoryImpl(
-                TransactionLocalDataSource(appDatabase),
-              ),
-              categoryRepository: CategoryRepositoryImpl(
-                CategoryLocalDataSource(appDatabase),
-              ),
-            ),
-            getMonthlyTransactionsUseCase: GetMonthlyTransactionUseCase(
-              repository: TransactionRepositoryImpl(
-                TransactionLocalDataSource(appDatabase),
-              ),
-            ),
-            getCategoriesUseCase: GetCategoriesUseCase(
-              repository: CategoryRepositoryImpl(
-                CategoryLocalDataSource(appDatabase),
-              ),
-            ),
-            deleteTransactionUseCase: DeleteTransactionUsecase(
-              TransactionRepositoryImpl(
-                TransactionLocalDataSource(appDatabase),
-              ),
-            ),
+            getMonthlySummaryUsecase: sl(),
+            getMonthlyTransactionsUseCase: sl(),
+            getCategoriesUseCase: sl(),
+            deleteTransactionUseCase: sl(),
           ),
-
           child: const DashboardPage(),
         );
       },
     ),
-
     GoRoute(
       path: '/enter-name',
       builder: (context, state) => const EnterNameScreen(),
@@ -66,13 +36,7 @@ final GoRouter appRouter = GoRouter(
       path: '/add-transaction',
       builder: (context, state) {
         return BlocProvider(
-          create: (_) => AddTransactionBloc(
-            addTransactionUseCase: AddTransactionUseCase(
-              repository: TransactionRepositoryImpl(
-                TransactionLocalDataSource(appDatabase),
-              ),
-            ),
-          ),
+          create: (_) => AddTransactionBloc(addTransactionUseCase: sl()),
           child: const AddTransactionPage(),
         );
       },
@@ -81,18 +45,11 @@ final GoRouter appRouter = GoRouter(
       path: '/opening-balance',
       builder: (context, state) {
         return BlocProvider(
-          create: (_) => OpeningBalanceBloc(
-            AddTransactionUseCase(
-              repository: TransactionRepositoryImpl(
-                TransactionLocalDataSource(appDatabase),
-              ),
-            ),
-          ),
+          create: (_) => OpeningBalanceBloc(sl()),
           child: const OpeningBalancePage(),
         );
       },
     ),
-
     // GoRoute(
     //   path: '/settings',
     //   builder: (context, state) => const SettingsPage(),
