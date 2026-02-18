@@ -1,4 +1,3 @@
-import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 
 abstract class AddTransactionEvent {}
@@ -24,9 +23,8 @@ class AmountConfirmation extends AddTransactionEvent {}
 
 /// Step 3: category selection
 class CategorySelected extends AddTransactionEvent {
-  final CategoryEntity category;
-
-  CategorySelected(this.category);
+  final String categoryId;
+  CategorySelected(this.categoryId);
 }
 
 /// Step 4: notes

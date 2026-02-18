@@ -1,5 +1,4 @@
 import 'package:spend_wise/core/state/status.dart';
-import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add_transaction_step.dart';
 
@@ -7,7 +6,7 @@ class AddTransactionState {
   final AddTransactionStep step;
   final TransactionType? type;
   final int amount;
-  final CategoryEntity? category;
+  final String? categoryId;
   final String? notes;
   final Status status;
 
@@ -15,7 +14,7 @@ class AddTransactionState {
     required this.step,
     this.type,
     this.amount = 0,
-    this.category,
+    this.categoryId,
     this.notes,
     this.status = Status.initial,
   });
@@ -31,7 +30,7 @@ class AddTransactionState {
     AddTransactionStep? step,
     TransactionType? type,
     int? amount,
-    CategoryEntity? category,
+    String? categoryId,
     String? notes,
     Status? status,
   }) {
@@ -39,9 +38,9 @@ class AddTransactionState {
       step: step ?? this.step,
       type: type ?? this.type,
       amount: amount ?? this.amount,
+      categoryId: categoryId ?? this.categoryId,
       notes: notes ?? this.notes,
       status: status ?? this.status,
-      category: category ?? this.category,
     );
   }
 }

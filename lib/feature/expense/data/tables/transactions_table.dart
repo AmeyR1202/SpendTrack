@@ -6,7 +6,6 @@ class Transactions extends Table {
   TextColumn get categoryId => text()();
   IntColumn get timestamp => integer()();
   TextColumn get type => text()();
-  TextColumn get categoryName => text()();
   TextColumn get notes => text().nullable()();
   IntColumn get createdAt =>
       integer().clientDefault(() => DateTime.now().millisecondsSinceEpoch)();

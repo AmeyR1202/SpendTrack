@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/state/status.dart';
-import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
@@ -40,7 +39,7 @@ class AddTransactionBloc
     on<CategorySelected>((event, emit) {
       emit(
         state.copyWith(
-          category: event.category,
+          categoryId: event.categoryId,
           step: AddTransactionStep.addDetails,
         ),
       );
@@ -50,24 +49,20 @@ class AddTransactionBloc
       emit(state.copyWith(notes: event.notes));
     });
     on<TransactionSubmitted>((event, emit) async {
-      if (state.type == null || state.category == null || state.amount == 0) {
+      if (state.type == null || state.categoryId == null || state.amount == 0) {
         return;
       }
 
       emit(state.copyWith(status: Status.loading));
 
-      final transaction = TransactionEntity(
-        transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
+      final params = AddTransactionParams(
         amount: state.amount.toDouble(),
-
-        categoryId: state.category!.categoryId,
+        categoryId: state.categoryId!,
         type: state.type!,
-        categoryName: state.category!.categoryName,
-        dateTime: DateTime.now(),
         notes: state.notes,
       );
 
-      await addTransactionUseCase(transaction);
+      await addTransactionUseCase(params);
 
       emit(
         state.copyWith(

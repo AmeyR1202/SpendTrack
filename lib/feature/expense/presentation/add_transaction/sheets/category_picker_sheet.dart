@@ -83,10 +83,10 @@ class _CategorySelectionContent extends StatelessWidget {
                     CategoryChip(
                       label: cat.categoryName,
                       icon: Icons.category,
-                      selected: state.category?.categoryId == cat.categoryId,
+                      selected: state.categoryId == cat.categoryId,
                       onTap: () {
                         context.read<AddTransactionBloc>().add(
-                          CategorySelected(cat),
+                          CategorySelected(cat.categoryId),
                         );
                       },
                     ),
