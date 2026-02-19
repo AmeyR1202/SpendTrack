@@ -86,10 +86,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
                   const SizedBox(height: 16),
                   Expanded(
-                    child: TransactionList(
-                      transactions: state.transactions,
-                      categories: state.categories,
-                    ),
+                    child: TransactionList(transactions: state.transactions),
                   ),
                 ],
               ),

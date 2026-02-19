@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/state/status.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add_transaction_step.dart';
@@ -8,11 +9,17 @@ import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add
 class AddTransactionBloc
     extends Bloc<AddTransactionEvent, AddTransactionState> {
   final AddTransactionUseCase addTransactionUseCase;
+  final GetCategoriesUseCase getCategoriesUseCase;
 
-  AddTransactionBloc({required this.addTransactionUseCase})
-    : super(AddTransactionState.initial()) {
-    on<FlowStarted>((event, emit) {
-      emit(AddTransactionState.initial());
+  AddTransactionBloc({
+    required this.addTransactionUseCase,
+    required this.getCategoriesUseCase,
+  }) : super(AddTransactionState.initial()) {
+    on<FlowStarted>((event, emit) async {
+      emit(state.copyWith(status: Status.loading));
+
+      final categories = await getCategoriesUseCase();
+      emit(state.copyWith(categories: categories, status: Status.initial));
     });
 
     on<TransactionTypeSelected>((event, emit) {

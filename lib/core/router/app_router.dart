@@ -36,7 +36,10 @@ final GoRouter appRouter = GoRouter(
       path: '/add-transaction',
       builder: (context, state) {
         return BlocProvider(
-          create: (_) => AddTransactionBloc(addTransactionUseCase: sl()),
+          create: (_) => AddTransactionBloc(
+            addTransactionUseCase: sl(),
+            getCategoriesUseCase: sl(),
+          ),
           child: const AddTransactionPage(),
         );
       },

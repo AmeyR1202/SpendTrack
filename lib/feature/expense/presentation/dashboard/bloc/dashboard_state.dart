@@ -1,13 +1,13 @@
 import 'package:spend_wise/core/state/status.dart';
 import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/monthly_summary_entity.dart';
-import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
+import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_bloc.dart';
 
 class DashboardState {
   final Status status;
   final MonthlySummaryEntity? summary;
   final String? errorMessage;
-  final List<TransactionEntity> transactions;
+  final List<TransactionViewModel> transactions;
   final List<CategoryEntity> categories;
   final bool showOpeningBalance;
 
@@ -28,7 +28,7 @@ class DashboardState {
     Status? status,
     MonthlySummaryEntity? summary,
     String? errorMessage,
-    List<TransactionEntity>? transactions,
+    List<TransactionViewModel>? transactions,
     List<CategoryEntity>? categories,
   }) {
     return DashboardState(

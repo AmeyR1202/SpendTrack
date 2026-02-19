@@ -1,4 +1,5 @@
 import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/delete_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
@@ -54,12 +55,34 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final transactions = await getMonthlyTransactionsUseCase(event.month);
       final categories = await getCategoriesUseCase();
 
+      final viewModels = transactions.map((tx) {
+        print('Transactions: ${transactions.map((t) => t.categoryId)}');
+        print('Categories: ${categories.map((c) => c.categoryId)}');
+
+        final category = categories.firstWhere(
+          (c) => c.categoryId == tx.categoryId,
+          orElse: () => CategoryEntity(
+            categoryId: 'unknown',
+            categoryName: 'Unknown',
+            type: tx.type,
+          ),
+        );
+
+        return TransactionViewModel(
+          id: tx.transactionId,
+          amount: tx.amount,
+          categoryName: category.categoryName,
+          type: tx.type,
+          dateTime: tx.dateTime,
+        );
+      }).toList();
+
       emit(
         state.copyWith(
           status: Status.success,
           summary: summary,
-          transactions: transactions,
           categories: categories,
+          transactions: viewModels,
         ),
       );
     } catch (e) {

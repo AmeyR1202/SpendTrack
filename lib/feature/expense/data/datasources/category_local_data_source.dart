@@ -16,15 +16,24 @@ class CategoryLocalDataSource {
 
   Future<void> _seedDefaultCategories() async {
     final data = [
-      CategoriesCompanion.insert(id: 'food', name: 'Food', type: 'expense'),
-      CategoriesCompanion.insert(id: 'rent', name: 'Rent', type: 'expense'),
-      CategoriesCompanion.insert(id: 'travel', name: 'Travel', type: 'expense'),
+      CategoriesCompanion.insert(id: 'fuel', name: 'Fuel', type: 'expense'),
+      CategoriesCompanion.insert(id: 'repair', name: 'Repair', type: 'expense'),
       CategoriesCompanion.insert(
-        id: 'misc',
-        name: 'Miscellaneous',
+        id: 'service',
+        name: 'Service',
+        type: 'expense',
+      ),
+      CategoriesCompanion.insert(
+        id: 'maintenance',
+        name: 'Maintenance',
         type: 'expense',
       ),
       CategoriesCompanion.insert(id: 'salary', name: 'Salary', type: 'income'),
+      CategoriesCompanion.insert(
+        id: 'opening',
+        name: 'Opening Balance',
+        type: 'income',
+      ),
     ];
 
     await database.insertCategories(data);

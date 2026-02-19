@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/theme/app_colors.dart';
-import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
-import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_event.dart';
 
 class TransactionList extends StatelessWidget {
-  final List<TransactionEntity> transactions;
-  final List<CategoryEntity> categories;
+  final List<TransactionViewModel> transactions;
 
-  const TransactionList({
-    super.key,
-    required this.transactions,
-    required this.categories,
-  });
+  const TransactionList({super.key, required this.transactions});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +25,7 @@ class TransactionList extends StatelessWidget {
         final isExpense = tx.type == TransactionType.expense;
 
         return Dismissible(
-          key: ValueKey(tx.transactionId),
+          key: ValueKey(tx.id),
           direction: DismissDirection.endToStart,
           background: Container(
             alignment: Alignment.centerRight,
@@ -44,9 +37,7 @@ class TransactionList extends StatelessWidget {
             child: const Icon(Icons.delete, color: AppColors.textPrimary),
           ),
           onDismissed: (_) {
-            context.read<DashboardBloc>().add(
-              TransactionDeleted(tx.transactionId),
-            );
+            context.read<DashboardBloc>().add(TransactionDeleted(tx.id));
           },
           child: InkWell(
             borderRadius: BorderRadius.circular(18),
@@ -88,7 +79,8 @@ class TransactionList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          tx.categoryId,
+                          tx.categoryName,
+
                           style: const TextStyle(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.w900,
