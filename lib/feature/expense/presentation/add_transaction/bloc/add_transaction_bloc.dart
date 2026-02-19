@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/state/status.dart';
-import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
+import 'package:spend_wise/feature/expense/domain/usecases/get_categories_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add_transaction_step.dart';
@@ -9,11 +9,17 @@ import 'package:spend_wise/feature/expense/presentation/add_transaction/flow/add
 class AddTransactionBloc
     extends Bloc<AddTransactionEvent, AddTransactionState> {
   final AddTransactionUseCase addTransactionUseCase;
+  final GetCategoriesUseCase getCategoriesUseCase;
 
-  AddTransactionBloc({required this.addTransactionUseCase})
-    : super(AddTransactionState.initial()) {
-    on<FlowStarted>((event, emit) {
-      emit(AddTransactionState.initial());
+  AddTransactionBloc({
+    required this.addTransactionUseCase,
+    required this.getCategoriesUseCase,
+  }) : super(AddTransactionState.initial()) {
+    on<FlowStarted>((event, emit) async {
+      emit(state.copyWith(status: Status.loading));
+
+      final categories = await getCategoriesUseCase();
+      emit(state.copyWith(categories: categories, status: Status.initial));
     });
 
     on<TransactionTypeSelected>((event, emit) {
@@ -40,7 +46,7 @@ class AddTransactionBloc
     on<CategorySelected>((event, emit) {
       emit(
         state.copyWith(
-          category: event.category,
+          categoryId: event.categoryId,
           step: AddTransactionStep.addDetails,
         ),
       );
@@ -50,24 +56,20 @@ class AddTransactionBloc
       emit(state.copyWith(notes: event.notes));
     });
     on<TransactionSubmitted>((event, emit) async {
-      if (state.type == null || state.category == null || state.amount == 0) {
+      if (state.type == null || state.categoryId == null || state.amount == 0) {
         return;
       }
 
       emit(state.copyWith(status: Status.loading));
 
-      final transaction = TransactionEntity(
-        transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
+      final params = AddTransactionParams(
         amount: state.amount.toDouble(),
-
-        categoryId: state.category!.categoryId,
+        categoryId: state.categoryId!,
         type: state.type!,
-        categoryName: state.category!.categoryName,
-        dateTime: DateTime.now(),
         notes: state.notes,
       );
 
-      await addTransactionUseCase(transaction);
+      await addTransactionUseCase(params);
 
       emit(
         state.copyWith(

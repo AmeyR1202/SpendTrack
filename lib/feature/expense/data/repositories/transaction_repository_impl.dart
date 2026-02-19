@@ -14,7 +14,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
       id: transaction.transactionId,
       amount: transaction.amount,
       categoryId: transaction.categoryId,
-      categoryName: transaction.categoryName,
       dateTime: transaction.dateTime,
       type: transaction.type,
       notes: transaction.notes,
@@ -36,7 +35,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
             type: t.type == 'income'
                 ? TransactionType.income
                 : TransactionType.expense,
-            categoryName: t.categoryName,
             dateTime: DateTime.fromMillisecondsSinceEpoch(t.timestamp),
             notes: t.notes,
           ),

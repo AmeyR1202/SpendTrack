@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/state/status.dart';
-import 'package:spend_wise/feature/expense/domain/entities/transaction_entity.dart';
 import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
 import 'package:spend_wise/feature/expense/domain/usecases/add_transaction_usecase.dart';
 import 'package:spend_wise/feature/expense/presentation/opening_balance/bloc/opening_balance_event.dart';
@@ -25,17 +24,14 @@ class OpeningBalanceBloc
 
       emit(state.copyWith(status: Status.loading));
 
-      final tx = TransactionEntity(
-        transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
+      final params = AddTransactionParams(
         amount: state.amount.toDouble(),
-        type: TransactionType.income,
         categoryId: 'opening',
-        dateTime: DateTime.now(),
-        categoryName: 'Opening Balance',
+        type: TransactionType.income,
         notes: 'Opening Balance',
       );
 
-      await usecase(tx);
+      await usecase(params);
 
       emit(state.copyWith(status: Status.success));
     });

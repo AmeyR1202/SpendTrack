@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spend_wise/core/theme/app_colors.dart';
-import 'package:spend_wise/feature/expense/domain/entities/category_entity.dart';
-import 'package:spend_wise/feature/expense/domain/entities/transaction_type.dart';
+
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_event.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_state.dart';
@@ -31,39 +30,6 @@ class _CategorySelectionContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    /// later → load from DB and we'll create type (income/expense)
-    /// and render only those chip widgets which are included in income or expense
-    final categories = [
-      CategoryEntity(
-        categoryId: '1',
-        categoryName: 'Fuel',
-        type: TransactionType.expense,
-      ),
-      CategoryEntity(
-        categoryId: '2',
-        categoryName: 'Service',
-        type: TransactionType.expense,
-      ),
-      CategoryEntity(
-        categoryId: '3',
-        categoryName: 'Maintenance',
-        type: TransactionType.expense,
-      ),
-      CategoryEntity(
-        categoryId: '4',
-        categoryName: 'Repair',
-        type: TransactionType.expense,
-      ),
-
-      // ✅ income
-      CategoryEntity(
-        categoryId: '5',
-        categoryName: 'Salary',
-        type: TransactionType.income,
-      ),
-    ];
-
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -79,14 +45,14 @@ class _CategorySelectionContent extends StatelessWidget {
                 spacing: 12,
                 runSpacing: 12,
                 children: [
-                  for (final cat in categories)
+                  for (final cat in state.categories)
                     CategoryChip(
                       label: cat.categoryName,
                       icon: Icons.category,
-                      selected: state.category?.categoryId == cat.categoryId,
+                      selected: state.categoryId == cat.categoryId,
                       onTap: () {
                         context.read<AddTransactionBloc>().add(
-                          CategorySelected(cat),
+                          CategorySelected(cat.categoryId),
                         );
                       },
                     ),
