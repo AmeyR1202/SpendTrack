@@ -56,9 +56,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final categories = await getCategoriesUseCase();
 
       final viewModels = transactions.map((tx) {
-        print('Transactions: ${transactions.map((t) => t.categoryId)}');
-        print('Categories: ${categories.map((c) => c.categoryId)}');
-
         final category = categories.firstWhere(
           (c) => c.categoryId == tx.categoryId,
           orElse: () => CategoryEntity(
