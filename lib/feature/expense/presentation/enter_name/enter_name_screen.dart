@@ -18,12 +18,6 @@ class EnterNameScreen extends StatelessWidget {
         if (state.status == Status.success) {
           context.go('/opening-balance');
         }
-
-        if (state.status == Status.error && state.errorMessage != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
-        }
       },
       child: Scaffold(
         body: SafeArea(
@@ -65,29 +59,20 @@ class EnterNameScreen extends StatelessWidget {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                    color: Color.fromRGBO(
-                                      0,
-                                      0,
-                                      0,
-                                      0.3,
-                                    ), // enabled (not focused)
+                                    color: AppColors
+                                        .border, // enabled (not focused)
                                     width: 1,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
-                                    color: Color.fromRGBO(
-                                      0,
-                                      0,
-                                      0,
-                                      0.1,
-                                    ), // focused
+                                    color: AppColors.border, // focused
                                     width: 1,
                                   ),
                                 ),
                               ),
-                              cursorColor: AppColors.background,
+                              cursorColor: AppColors.textMuted,
                             );
                           },
                         ),
@@ -118,12 +103,7 @@ class EnterNameScreen extends StatelessWidget {
                             backgroundColor: isEnabled
                                 ? AppColors.blue
                                 : AppColors.background,
-                            disabledBackgroundColor: const Color.fromARGB(
-                              255,
-                              0,
-                              0,
-                              0,
-                            ),
+                            disabledBackgroundColor: AppColors.textMuted,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),

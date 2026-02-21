@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (state.isUserPresent) {
             context.go('/dashboard');
           } else {
-            context.go('/');
+            context.go('/enter-name');
           }
           if (state.status == Status.error) {
             // Optional: log or show fallback UI later
@@ -43,8 +43,11 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              /// how to tweak flex
+              /// Increase top flex → pushes content downward
+              /// Increase bottom flex → pushes content upward
+              /// Increase middle flex → increases gap between widgets
               Spacer(flex: 3),
-
               Image(
                 image: AssetImage('assets/icon/spend_wise.png'),
                 width: 140,
