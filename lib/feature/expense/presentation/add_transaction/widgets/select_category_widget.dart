@@ -16,7 +16,7 @@ class SelectCategory extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: AppColors.border, width: 0.2),
+          side: const BorderSide(color: AppColors.textPrimary, width: 0.2),
         ),
       ),
       onPressed: () {},
@@ -25,13 +25,13 @@ class SelectCategory extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
 
         children: [
-          Icon(Icons.add, size: 24, color: AppColors.background),
+          Icon(Icons.add, size: 24, color: AppColors.textSecondary),
           SizedBox(width: 5),
           Text(
             'Select Category',
             style: TextStyle(
               fontSize: 15,
-              color: AppColors.background,
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.w600,
             ),
           ),

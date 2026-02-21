@@ -1,4 +1,5 @@
 import 'package:spend_wise/core/state/status.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/expense/presentation/splash/bloc/splash_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/splash/bloc/splash_event.dart';
 import 'package:spend_wise/feature/expense/presentation/splash/bloc/splash_state.dart';
@@ -36,7 +37,34 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         }
       },
-      child: const Scaffold(body: Center(child: CircularProgressIndicator())),
+      child: const Scaffold(
+        backgroundColor: AppColors.background,
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              /// how to tweak flex
+              /// Increase top flex → pushes content downward
+              /// Increase bottom flex → pushes content upward
+              /// Increase middle flex → increases gap between widgets
+              Spacer(flex: 3),
+              Image(
+                image: AssetImage('assets/icon/spend_wise.png'),
+                width: 140,
+              ),
+
+              Spacer(flex: 2),
+
+              SizedBox(
+                width: 180,
+                child: LinearProgressIndicator(minHeight: 3),
+              ),
+
+              Spacer(flex: 1),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

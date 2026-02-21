@@ -48,6 +48,15 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         _handleStep(context, state.step);
       },
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.background,
+          leading: IconButton(
+            onPressed: () {
+              context.go('/dashboard');
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+        ),
         body: BlocBuilder<AddTransactionBloc, AddTransactionState>(
           builder: (context, state) {
             return SafeArea(

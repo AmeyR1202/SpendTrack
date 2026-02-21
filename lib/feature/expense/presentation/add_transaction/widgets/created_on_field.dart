@@ -31,7 +31,7 @@ class CreatedOnRow extends StatelessWidget {
             const SizedBox(width: 12),
             const Text(
               "Created on",
-              style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
             ),
             const Spacer(),
             Text(

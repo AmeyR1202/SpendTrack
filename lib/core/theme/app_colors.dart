@@ -22,5 +22,5 @@ class AppColors {
   static const textMuted = Colors.white38;
 
   // borders
-  static const border = Colors.white12;
+  static const border = (Color.fromRGBO(255, 255, 255, 0.3));
 }
