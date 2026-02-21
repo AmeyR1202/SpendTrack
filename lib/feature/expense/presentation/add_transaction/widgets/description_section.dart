@@ -37,9 +37,9 @@ class DescriptionSection extends StatelessWidget {
                   controller: controller,
                   keyboardType: TextInputType.multiline,
                   minLines: 1,
-                  maxLines: null, // auto grow
+                  maxLines: null,
                   decoration: InputDecoration(
-                    isCollapsed: true, // removes default padding
+                    isCollapsed: true,
                     border: InputBorder.none,
                     hintText: hint,
                     hintStyle: TextStyle(color: hintColor),
