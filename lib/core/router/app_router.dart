@@ -1,4 +1,6 @@
 import 'package:spend_wise/core/di/injection.dart';
+import 'package:spend_wise/feature/analytics/presentation/bloc/analytics_bloc.dart';
+import 'package:spend_wise/feature/analytics/presentation/pages/analytics_page.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/bloc/add_transaction_bloc.dart';
 import 'package:spend_wise/feature/expense/presentation/add_transaction/pages/add_transaction_page.dart';
 import 'package:spend_wise/feature/expense/presentation/dashboard/bloc/dashboard_bloc.dart';
@@ -11,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
-  /// TODO : add a error builder and set the go route to dashboard page instead of splash page
+  ///  add a error builder and set the go route to dashboard page instead of splash page
   initialLocation: '/',
   routes: [
     GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
@@ -51,6 +53,16 @@ final GoRouter appRouter = GoRouter(
         return BlocProvider(
           create: (_) => OpeningBalanceBloc(sl()),
           child: const OpeningBalancePage(),
+        );
+      },
+    ),
+    GoRoute(
+      path: '/analytics',
+      name: 'analytics',
+      builder: (context, state) {
+        return BlocProvider(
+          create: (_) => sl<AnalyticsBloc>(),
+          child: const AnalyticsPage(),
         );
       },
     ),
