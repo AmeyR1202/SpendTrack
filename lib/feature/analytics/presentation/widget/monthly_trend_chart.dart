@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:spend_wise/core/theme/app_colors.dart';
 import 'package:spend_wise/feature/analytics/domain/entities/daily_spending.dart';
 
 class MonthlyTrendChart extends StatelessWidget {
@@ -32,7 +33,7 @@ class MonthlyTrendChart extends StatelessWidget {
               dotData: const FlDotData(show: true),
               belowBarData: BarAreaData(
                 show: true,
-                color: Colors.black.withValues(alpha: 0.05),
+                color: AppColors.background,
               ),
             ),
           ],
@@ -55,7 +56,10 @@ class MonthlyTrendChart extends StatelessWidget {
                 getTitlesWidget: (value, meta) {
                   return Text(
                     value.toInt().toString(),
-                    style: const TextStyle(fontSize: 10, color: Colors.grey),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: AppColors.textMuted,
+                    ),
                   );
                 },
               ),
