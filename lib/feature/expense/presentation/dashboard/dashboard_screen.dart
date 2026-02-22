@@ -102,14 +102,6 @@ class _DashboardPageState extends State<DashboardPage> {
           context.go(routeFromNavItem(item));
         },
       ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go(routeFromNavItem(DashboardNavItem.add));
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

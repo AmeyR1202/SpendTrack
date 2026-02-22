@@ -8,5 +8,7 @@ String routeFromNavItem(DashboardNavItem item) {
       return '/add-transaction';
     case DashboardNavItem.settings:
       return '/settings';
+    case DashboardNavItem.analytics:
+      return '/analytics';
   }
 }

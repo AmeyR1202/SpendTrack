@@ -18,8 +18,7 @@ class DashboardBottomNav extends StatelessWidget {
     const inactive = AppColors.textSecondary;
 
     return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
+      color: AppColors.background,
       child: SizedBox(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -32,14 +31,29 @@ class DashboardBottomNav extends StatelessWidget {
               onPressed: () => onItemSelected(DashboardNavItem.home),
             ),
 
-            const SizedBox(width: 48),
-
+            IconButton(
+              onPressed: () => onItemSelected(DashboardNavItem.add),
+              icon: Icon(
+                Icons.add,
+                color: current == DashboardNavItem.add ? active : inactive,
+              ),
+            ),
             IconButton(
               icon: Icon(
                 Icons.settings,
                 color: current == DashboardNavItem.settings ? active : inactive,
               ),
               onPressed: () => onItemSelected(DashboardNavItem.settings),
+            ),
+
+            IconButton(
+              onPressed: () => onItemSelected(DashboardNavItem.analytics),
+              icon: Icon(
+                Icons.analytics,
+                color: current == DashboardNavItem.analytics
+                    ? active
+                    : inactive,
+              ),
             ),
           ],
         ),

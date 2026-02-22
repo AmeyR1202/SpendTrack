@@ -1,1 +1,1 @@
-enum DashboardNavItem { home, add, settings }
+enum DashboardNavItem { home, add, settings, analytics }
