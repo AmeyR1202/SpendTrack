@@ -5,3 +5,8 @@ class AnalyticsRequested extends AnalyticsEvent {
 
   AnalyticsRequested(this.month);
 }
+
+class TrendRequested extends AnalyticsEvent {
+  final DateTime month;
+  TrendRequested(this.month);
+}
